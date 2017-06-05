@@ -45,3 +45,9 @@ int MemSteve::Counter::countLetters(std::string input) {
     }
     return sum;
 }
+
+double MemSteve::Counter::calculateEntropy(std::vector<Letter> s) {
+    double entropy = 0.0;
+
+    return entropy;
+}
