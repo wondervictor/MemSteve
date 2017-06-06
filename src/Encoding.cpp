@@ -5,46 +5,62 @@
 
 #include "../include/Encoding.h"
 #include <iostream>
+#include <fstream>
+
 
 #define LEFT 0
 #define RIGHT 1
 
-float MemSteve::codeByHuffmen(const std::map<char, int>& letters,
-                              std::map<char, std::string> code,
-                              std::string outputFileName) {
+float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName) {
     float codeLength = 0.0;
+    HuffmenTree huffmenTree(const_cast<std::map<char, int>& >(letters));
+    std::map<char, std::string> code;
+    huffmenTree.encode(code);
 
 
+    Encoder encoder(code);
+
+    std::string outputString;
+
+    codeLength = encoder.encode(inputString,code,outputString);
+    std::cout<<outputString<<"\n";
+
+    encoder.writeToFile(outputString, outputFileName);
 
     return codeLength;
 }
 
 
-float MemSteve::codeByShannon(const std::map<char, int>& letters,
-                              std::map<char, std::string> code,
-                              std::string outputFileName) {
+float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName) {
     float codeLength = 0.0;
 
     return codeLength;
 }
 
-int MemSteve::Encoder::encode(const std::string& inputString,
-                              const std::map<char, std::string>& c,
+float MemSteve::Encoder::encode(const std::string& inputString,
+                              std::map<char, std::string>& code,
                               std::string& outputString) {
     int length = 0;
-
-
-
-
-    return length;
+    int num = 0;
+    for(auto i: inputString) {
+        if (code[i].size()) {
+            num += 1;
+            length += code[i].size();
+            outputString.append(code[i]);
+        }
+    }
+    return (float)length/num;
 }
 
 void MemSteve::Encoder::writeToFile(const std::string &inputString, const std::string &fileName) {
 
+    std::ofstream outputFile(fileName, std::ios::binary);
+    outputFile << inputString;
+    outputFile.close();
 }
 
 
-int MemSteve::Encoder::encode(const std::string& inputString,
+float MemSteve::Encoder::encode(const std::string& inputString,
                               std::string& outputString) {
     return this->encode(inputString,this->code,outputString);
 }

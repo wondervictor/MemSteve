@@ -150,6 +150,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/Counter.o: src/Counter.cpp.o
+
+.PHONY : src/Counter.o
+
+# target to build an object file
+src/Counter.cpp.o:
+	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/src/Counter.cpp.o
+.PHONY : src/Counter.cpp.o
+
+src/Counter.i: src/Counter.cpp.i
+
+.PHONY : src/Counter.i
+
+# target to preprocess a source file
+src/Counter.cpp.i:
+	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/src/Counter.cpp.i
+.PHONY : src/Counter.cpp.i
+
+src/Counter.s: src/Counter.cpp.s
+
+.PHONY : src/Counter.s
+
+# target to generate assembly for a file
+src/Counter.cpp.s:
+	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/src/Counter.cpp.s
+.PHONY : src/Counter.cpp.s
+
 src/Encoding.o: src/Encoding.cpp.o
 
 .PHONY : src/Encoding.o
@@ -177,33 +204,6 @@ src/Encoding.cpp.s:
 	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/src/Encoding.cpp.s
 .PHONY : src/Encoding.cpp.s
 
-src/WordCounter.o: src/WordCounter.cpp.o
-
-.PHONY : src/WordCounter.o
-
-# target to build an object file
-src/WordCounter.cpp.o:
-	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/src/WordCounter.cpp.o
-.PHONY : src/WordCounter.cpp.o
-
-src/WordCounter.i: src/WordCounter.cpp.i
-
-.PHONY : src/WordCounter.i
-
-# target to preprocess a source file
-src/WordCounter.cpp.i:
-	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/src/WordCounter.cpp.i
-.PHONY : src/WordCounter.cpp.i
-
-src/WordCounter.s: src/WordCounter.cpp.s
-
-.PHONY : src/WordCounter.s
-
-# target to generate assembly for a file
-src/WordCounter.cpp.s:
-	$(MAKE) -f CMakeFiles/MemSteve.dir/build.make CMakeFiles/MemSteve.dir/src/WordCounter.cpp.s
-.PHONY : src/WordCounter.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -216,12 +216,12 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/Counter.o"
+	@echo "... src/Counter.i"
+	@echo "... src/Counter.s"
 	@echo "... src/Encoding.o"
 	@echo "... src/Encoding.i"
 	@echo "... src/Encoding.s"
-	@echo "... src/WordCounter.o"
-	@echo "... src/WordCounter.i"
-	@echo "... src/WordCounter.s"
 .PHONY : help
 
 
