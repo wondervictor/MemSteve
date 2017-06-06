@@ -14,13 +14,19 @@
 namespace MemSteve {
 
     //
-    struct Letter {
+    class Letter {
+
+    public:
+        Letter(char s, int n):letter(s),count(n){};
+
+        bool operator < (const Letter& b) const {
+            return count > b.count;
+        }
+        int getCount() const { return count; }
+        int getLetter() const { return letter; }
+    private:
         int count;
         char letter;
-        Letter(char s, int n):letter(s),count(n){};
-        inline bool operator > (const Letter& a, const Letter& b) {
-            return a.count > b.count;
-        }
     };
 
     //

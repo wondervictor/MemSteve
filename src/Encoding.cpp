@@ -4,6 +4,7 @@
 
 
 #include "../include/Encoding.h"
+#include <iostream>
 
 
 float MemSteve::codeByHuffmen(const std::vector<Letter>& letters,
@@ -41,27 +42,30 @@ int MemSteve::Encoder::encode(const std::string& inputString,
 }
 
 
-namespace MemSteve {
-    class HuffmenTree {
+void MemSteve::HuffmenTree::encode(std::map<char, std::string> &c) {
 
-        struct node {
-            node* left;
-            node* right;
-            node* parent;
-            float weight;
-            char letter;
-        };
-
-    public:
-
-        void encode(std::map<char, std::string>& c);
-
-    private:
-        node* root;
-
-    };
 
 }
+
+void MemSteve::HuffmenTree::convert(const std::vector<Letter> letters, std::priority_queue<Letter>& huffmenList) {
+    for(auto le: letters) {
+        huffmenList.push(le);
+    }
+    // test
+    while(huffmenList.size()) {
+        Letter p = huffmenList.top();
+        std::cout<<p.getCount();
+    }
+}
+
+
+
+MemSteve::HuffmenTree::HuffmenTree(std::vector<MemSteve::Letter> &letters) {
+    std::priority_queue<MemSteve::Letter> huffmenLetters;
+    convert(letters, huffmenLetters);
+}
+
+
 
 
 

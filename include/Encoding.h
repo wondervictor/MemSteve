@@ -7,6 +7,7 @@
 
 #include <map>
 #include "WordCounter.h"
+#include <queue>
 
 namespace MemSteve {
 
@@ -37,6 +38,28 @@ namespace MemSteve {
     float codeByShannon(const std::vector<Letter>& letters,
                        std::map<char, std::string> code,
                        std::string outputFileName);
+
+    class HuffmenTree {
+
+        struct node {
+            node* left;
+            node* right;
+            node* parent;
+            float weight;
+            char letter;
+        };
+
+    public:
+
+        void encode(std::map<char, std::string>& c);
+        HuffmenTree();
+        HuffmenTree(std::vector<Letter>& letters);
+
+    private:
+        node* root;
+        void convert(const std::vector<Letter> letters, std::priority_queue<Letter>& huffmenList);
+
+    };
 
 }
 
