@@ -86,6 +86,19 @@ namespace MemSteve {
         void construct(std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList);
     };
 
+
+    class Shannon {
+    public:
+        Shannon()= default;
+        Shannon(const std::map<char, int>& letters);
+        std::map<char, std::string> getShannonCode() const { return code; };
+        void encode(const std::map<char, int>& letters);
+
+    private:
+        std::map<char, std::string> code;
+
+    };
+
 }
 
 

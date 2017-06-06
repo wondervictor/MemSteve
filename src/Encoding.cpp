@@ -5,6 +5,7 @@
 
 #include "../include/Encoding.h"
 #include <iostream>
+#include <cmath>
 #include <fstream>
 
 
@@ -33,8 +34,19 @@ float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::str
 
 float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName) {
     float codeLength = 0.0;
+    Shannon shannon(letters);
+    std::map<char, std::string> code = shannon.getShannonCode();
+    Encoder encoder(code);
+
+    std::string outputString;
+
+    codeLength = encoder.encode(inputString,code,outputString);
+    std::cout<<outputString<<"\n";
+
+    encoder.writeToFile(outputString, outputFileName);
 
     return codeLength;
+
 }
 
 float MemSteve::Encoder::encode(const std::string& inputString,
@@ -189,6 +201,36 @@ void MemSteve::HuffmenTree::traverseTree() {
     node* __current = this->root;
     std::cout<<"test Tree"<<std::endl;
     trav(__current,0);
+}
+
+
+MemSteve::Shannon::Shannon(const std::map<char, int> &letters) {
+    encode(letters);
+}
+
+
+bool cmp(const std::pair<char, float>& a, const std::pair<char, float>& b) {
+    return a.second < b.second;
+}
+
+void MemSteve::Shannon::encode(const std::map<char, int> &letters) {
+    int sum = 0;
+    std::vector<std::pair<char, float> > letterList;
+    std::map<char, int>::iterator iter = const_cast<std::map<char, int>& >(letters).begin();
+    for(; iter != letters.end(); iter ++)  {
+        sum += iter->second;
+        std::pair<char, float> p(iter->first, iter->second);
+        letterList.push_back(p);
+    }
+
+    std::sort(letterList.begin(),letterList.end(),cmp);
+    float currentProb = 0;
+    std::vector<std::pair<char, float> >::iterator listIter = letterList.begin();
+    for(; listIter != letterList.end(); listIter ++) {
+        int length = (int)ceilf(log2f((float)sum/listIter->second));//ceil(log2f(sum/iter->second));
+        this->code[listIter->first] = "0000";
+        currentProb += (float)listIter->second/sum;
+    }
 }
 
 
