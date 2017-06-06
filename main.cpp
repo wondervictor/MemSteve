@@ -14,7 +14,7 @@ int main() {
     std::map<char, int> letters;
     wordCounter.getLetters(letters);
 
-    float l = MemSteve::codeByHuffmen(letters,s,path+"huffmen.dat");
+    float l = MemSteve::codeByShannon(letters,s,path+"shannon.dat");//MemSteve::codeByHuffmen(letters,s,path+"huffmen.dat");
     std::cout<<"\n"<<"code length: "<<l<<"\n";
 
 //    MemSteve::HuffmenTree ht(letters);

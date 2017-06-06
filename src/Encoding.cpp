@@ -213,6 +213,11 @@ bool cmp(const std::pair<char, float>& a, const std::pair<char, float>& b) {
     return a.second < b.second;
 }
 
+int getFloatBinary(float& num) {
+    num = num * 2;
+    return (int)(num);
+}
+
 void MemSteve::Shannon::encode(const std::map<char, int> &letters) {
     int sum = 0;
     std::vector<std::pair<char, float> > letterList;
@@ -228,7 +233,13 @@ void MemSteve::Shannon::encode(const std::map<char, int> &letters) {
     std::vector<std::pair<char, float> >::iterator listIter = letterList.begin();
     for(; listIter != letterList.end(); listIter ++) {
         int length = (int)ceilf(log2f((float)sum/listIter->second));//ceil(log2f(sum/iter->second));
-        this->code[listIter->first] = "0000";
+        std::string __code;
+        float prob = currentProb;
+        while(length) {
+            length --;
+            __code.push_back(getFloatBinary(prob) ? '1':'0');
+        }
+        code[listIter->first] = __code;
         currentProb += (float)listIter->second/sum;
     }
 }
