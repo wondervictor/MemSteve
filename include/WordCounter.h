@@ -7,27 +7,10 @@
 
 
 #include <string>
-#include <vector>
-
+#include <map>
 
 
 namespace MemSteve {
-
-    //
-    class Letter {
-
-    public:
-        Letter(char s, int n):letter(s),count(n){};
-
-        bool operator < (const Letter& b) const {
-            return count > b.count;
-        }
-        int getCount() const { return count; }
-        char getLetter() const { return letter; }
-    private:
-        int count;
-        char letter;
-    };
 
     //
     class Counter{
@@ -38,12 +21,12 @@ namespace MemSteve {
          **/
         int readFile(std::string fileName, std::string& ouputString);
 
-        double calculateEntropy(std::vector<Letter> s);
+        double calculateEntropy(std::map<char, int> s);
 
-        void getLetters(std::vector<Letter>& letters) { letters = counterData; }
+        void getLetters(std::map<char, int>& letters) { letters = counterData; }
 
     private:
-        std::vector<Letter> counterData;
+        std::map<char, int > counterData;
         int countLetters(std::string input);
 
 

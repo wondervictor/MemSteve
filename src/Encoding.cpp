@@ -9,7 +9,7 @@
 #define LEFT 0
 #define RIGHT 1
 
-float MemSteve::codeByHuffmen(const std::vector<Letter>& letters,
+float MemSteve::codeByHuffmen(const std::map<char, int>& letters,
                               std::map<char, std::string> code,
                               std::string outputFileName) {
     float codeLength = 0.0;
@@ -20,7 +20,7 @@ float MemSteve::codeByHuffmen(const std::vector<Letter>& letters,
 }
 
 
-float MemSteve::codeByShannon(const std::vector<Letter>& letters,
+float MemSteve::codeByShannon(const std::map<char, int>& letters,
                               std::map<char, std::string> code,
                               std::string outputFileName) {
     float codeLength = 0.0;
@@ -35,8 +35,14 @@ int MemSteve::Encoder::encode(const std::string& inputString,
 
 
 
+
     return length;
 }
+
+void MemSteve::Encoder::writeToFile(const std::string &inputString, const std::string &fileName) {
+
+}
+
 
 int MemSteve::Encoder::encode(const std::string& inputString,
                               std::string& outputString) {
@@ -62,12 +68,15 @@ void MemSteve::HuffmenTree::encode(std::map<char, std::string> &c) {
     traverseWithCode(this->root->left,"",LEFT, c);
 }
 
-void MemSteve::HuffmenTree::convert(const std::vector<Letter> letters, std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList) {
+void MemSteve::HuffmenTree::convert(const std::map<char, int>& letters, std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList) {
 
-    for(auto le: letters) {
-        node* newNode = new node(le.getLetter(), le.getCount());
+
+    std::map<char, int>::iterator iter = const_cast<std::map<char, int>& >(letters).begin();
+    for(; iter != letters.end(); iter ++)  {
+        node* newNode = new node(iter->first, iter->second);
         huffmenList.push(newNode);
     }
+
 //    for(auto le: letters) {
 //        huffmenList.push(le);
 //    }
@@ -138,7 +147,7 @@ MemSteve::HuffmenTree::~HuffmenTree() {
 
 
 
-MemSteve::HuffmenTree::HuffmenTree(std::vector<MemSteve::Letter> &letters) {
+MemSteve::HuffmenTree::HuffmenTree(std::map<char, int> &letters) {
     std::priority_queue<node*,std::vector<node*>,cmp> huffmenLetters;
     convert(letters, huffmenLetters);
     construct(huffmenLetters);

@@ -26,30 +26,21 @@ int MemSteve::Counter::readFile(std::string fileName, std::string& outputString)
 }
 
 int MemSteve::Counter::countLetters(std::string input) {
-
-    std::map<char, int> letters;
+    int sum = 0;
 
     for(char m: input) {
-        if (letters[m]) {
-            letters[m] ++;
-        } else
-            letters[m] = 1;
-    }
-    int sum = 0;
-    for (std::map<char, int>::iterator p = letters.begin(); p != letters.end(); p ++) {
-        if ((uint)p->first <= 255) {
-            Letter letter(p->first,p->second);
-            this->counterData.push_back(letter);
-            sum += p->second;
+        if ((uint)m <= 255) {
+            sum += 1;
+            if (this->counterData[m]) {
+                this->counterData[m] ++;
+            } else
+                this->counterData[m] = 1;
         }
     }
     return sum;
 }
 
-
-
-
-double MemSteve::Counter::calculateEntropy(std::vector<Letter> s) {
+double MemSteve::Counter::calculateEntropy(std::map<char, int> s) {
     double entropy = 0.0;
 
     return entropy;

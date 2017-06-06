@@ -23,6 +23,8 @@ namespace MemSteve {
                    const std::map<char, std::string>& c,
                    std::string& outputString);
 
+        void writeToFile(const std::string& inputString, const std::string& fileName);
+
         int encode(const std::string& inputString, std::string& outputString);
 
     private:
@@ -31,11 +33,11 @@ namespace MemSteve {
 
     };
 
-    float codeByHuffmen(const std::vector<Letter>& letters,
+    float codeByHuffmen(const std::map<char, int>& letters,
                        std::map<char, std::string> code,
                        std::string outputFileName);
 
-    float codeByShannon(const std::vector<Letter>& letters,
+    float codeByShannon(const std::map<char, int>& letters,
                        std::map<char, std::string> code,
                        std::string outputFileName);
 
@@ -69,7 +71,7 @@ namespace MemSteve {
 
         void encode(std::map<char, std::string>& c);
         HuffmenTree()= default;
-        HuffmenTree(std::vector<Letter>& letters);
+        HuffmenTree(std::map<char, int>& letters);
 
         ~HuffmenTree();
 
@@ -80,7 +82,7 @@ namespace MemSteve {
 
     private:
         node* root;
-        void convert(const std::vector<Letter> letters, std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList);
+        void convert(const std::map<char, int>& letters, std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList);
         void construct(std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList);
     };
 
