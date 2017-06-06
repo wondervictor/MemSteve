@@ -2,8 +2,8 @@
 // Created by VicChan on 2017/6/2.
 //
 
-#ifndef MEMSTEVE_WORDCOUNTER_H
-#define MEMSTEVE_WORDCOUNTER_H
+#ifndef MEMSTEVE_COUNTER_H
+#define MEMSTEVE_COUNTER_H
 
 
 #include <string>
@@ -34,4 +34,4 @@ namespace MemSteve {
 }
 
 
-#endif //MEMSTEVE_WORDCOUNTER_H
+#endif //MEMSTEVE_COUNTER_H

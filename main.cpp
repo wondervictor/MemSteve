@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/WordCounter.h"
+#include "include/Counter.h"
 #include "include/Encoding.h"
 
 
