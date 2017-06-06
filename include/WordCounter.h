@@ -23,7 +23,7 @@ namespace MemSteve {
             return count > b.count;
         }
         int getCount() const { return count; }
-        int getLetter() const { return letter; }
+        char getLetter() const { return letter; }
     private:
         int count;
         char letter;
@@ -40,8 +40,9 @@ namespace MemSteve {
 
         double calculateEntropy(std::vector<Letter> s);
 
+        void getLetters(std::vector<Letter>& letters) { letters = counterData; }
+
     private:
-        Counter& operator=(Counter&);
         std::vector<Letter> counterData;
         int countLetters(std::string input);
 
