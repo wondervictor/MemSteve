@@ -3,6 +3,7 @@
 #include "include/Encoding.h"
 
 
+
 int main() {
 
     MemSteve::Counter wordCounter;
@@ -12,7 +13,13 @@ int main() {
     std::vector<MemSteve::Letter> letters;
     wordCounter.getLetters(letters);
     MemSteve::HuffmenTree ht(letters);
-    ht.traverseTree();
     std::cout<<m<<"\n";
+    std::map<char, std::string> code;
+    ht.encode(code);
+//    std::map<char, std::string>::iterator iter;
+//    for( iter = code.begin(); iter != code.end(); iter++) {
+//        std::cout<<iter->first<<":"<<iter->second<<"\n";
+//    }
+
     return 0;
 }

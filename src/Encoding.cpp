@@ -6,6 +6,8 @@
 #include "../include/Encoding.h"
 #include <iostream>
 
+#define LEFT 0
+#define RIGHT 1
 
 float MemSteve::codeByHuffmen(const std::vector<Letter>& letters,
                               std::map<char, std::string> code,
@@ -42,9 +44,22 @@ int MemSteve::Encoder::encode(const std::string& inputString,
 }
 
 
+void traverseWithCode(MemSteve::HuffmenTree::node* root, std::string previousCode, int flag, std::map<char, std::string> &c) {
+    previousCode.push_back(flag==RIGHT ? '1':'0');
+    if (root->letter != 0) {
+        c[root->letter] = previousCode;
+    }
+    if (root->right) {
+        traverseWithCode(root->right, previousCode, RIGHT,c);
+    }
+    if (root->left) {
+        traverseWithCode(root->left, previousCode, LEFT,c);
+    }
+}
+
 void MemSteve::HuffmenTree::encode(std::map<char, std::string> &c) {
-
-
+    traverseWithCode(this->root->right,"",RIGHT, c);
+    traverseWithCode(this->root->left,"",LEFT, c);
 }
 
 void MemSteve::HuffmenTree::convert(const std::vector<Letter> letters, std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList) {
@@ -91,11 +106,11 @@ void::MemSteve::HuffmenTree::construct(std::priority_queue<node*,std::vector<nod
         node* combineNode = new node(0,firstNode->weight+secondNode->weight);
         combineNode->left = firstNode;
         combineNode->right = secondNode;
-        std::cout<<"left: "<<firstNode->letter<<" right: "<<secondNode->letter<<"\n";
+//        std::cout<<"left: "<<firstNode->letter<<" right: "<<secondNode->letter<<"\n";
         firstNode->parent = combineNode;
         secondNode->parent = combineNode;
         huffmenList.push(combineNode);
-        std::cout<<"Combine:"<< combineNode->weight<<"\n";
+//        std::cout<<"Combine:"<< combineNode->weight<<"\n";
     }
 
     node* topNode = huffmenList.top();
@@ -104,10 +119,20 @@ void::MemSteve::HuffmenTree::construct(std::priority_queue<node*,std::vector<nod
 
 
 
+static void deleteHuffmanNode(MemSteve::HuffmenTree::node* root) {
+    if (root->right) {
+        deleteHuffmanNode(root->right);
+    }
+    if (root->left) {
+        deleteHuffmanNode(root->left);
+    }
+    delete root;
+}
+
 
 MemSteve::HuffmenTree::~HuffmenTree() {
     if(this->root) {
-
+        deleteHuffmanNode(root);
     }
 }
 

@@ -68,7 +68,7 @@ namespace MemSteve {
         };
 
         void encode(std::map<char, std::string>& c);
-        HuffmenTree();
+        HuffmenTree()= default;
         HuffmenTree(std::vector<Letter>& letters);
 
         ~HuffmenTree();
