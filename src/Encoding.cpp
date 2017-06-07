@@ -77,6 +77,21 @@ float MemSteve::Encoder::encode(const std::string& inputString,
     return this->encode(inputString,this->code,outputString);
 }
 
+void replace(std::string& s, const std::string& toReplace, const std::string replaceWith) {
+    size_t f = s.find(toReplace);
+    s.replace(f, toReplace.length(), replaceWith);
+}
+
+void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString) {
+    outputString = inputString;
+    std::map<char, std::string>::iterator iter = c.begin();
+    for(; iter != c.end(); iter ++) {
+        std::string p;
+        p.push_back(iter->first);
+        replace(outputString,iter->second,p);
+    }
+}
+
 
 void traverseWithCode(MemSteve::HuffmenTree::node* root, std::string previousCode, int flag, std::map<char, std::string> &c) {
     previousCode.push_back(flag==RIGHT ? '1':'0');

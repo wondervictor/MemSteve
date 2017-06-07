@@ -35,6 +35,8 @@ namespace MemSteve {
                    std::map<char, std::string>& c,
                    std::string& outputString);
 
+        void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString);
+
         void writeToFile(const std::string& inputString, const std::string& fileName);
 
         float encode(const std::string& inputString, std::string& outputString);
