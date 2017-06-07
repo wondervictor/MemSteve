@@ -18,9 +18,11 @@
 namespace MemSteve {
 
 
-    float codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName, const std::string codeFileName);
+    float codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName, const std::string codeFileName);
 
-    float codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName, const std::string codeFileName);
+    float codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName, const std::string codeFileName);
+
+    void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString);
 
 
     class Encoder {
@@ -35,7 +37,6 @@ namespace MemSteve {
                    std::map<char, std::string>& c,
                    std::string& outputString);
 
-        void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString);
 
         void writeToFile(const std::string& inputString, const std::string& fileName);
 

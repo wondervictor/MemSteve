@@ -12,35 +12,29 @@
 #define LEFT 0
 #define RIGHT 1
 
-float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName,const std::string codeFileName) {
+float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName,const std::string codeFileName) {
     float codeLength = 0.0;
     HuffmenTree huffmenTree(const_cast<std::map<char, int>& >(letters));
-    std::map<char, std::string> code;
     huffmenTree.encode(code);
     huffmenTree.saveCode(code,codeFileName);
 
     Encoder encoder(code);
 
-    std::string outputString;
-
     codeLength = encoder.encode(inputString,code,outputString);
     std::cout<<outputString<<"\n";
 
     encoder.writeToFile(outputString, outputFileName);
-
 
     return codeLength;
 }
 
 
-float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName,const std::string codeFileName) {
+float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName,const std::string codeFileName) {
     float codeLength = 0.0;
     Shannon shannon(letters);
-    std::map<char, std::string> code = shannon.getShannonCode();
+    code = shannon.getShannonCode();
     Encoder encoder(code);
     shannon.saveCode(code,codeFileName);
-
-    std::string outputString;
 
     codeLength = encoder.encode(inputString,code,outputString);
     std::cout<<outputString<<"\n";
@@ -49,6 +43,25 @@ float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::str
 
     return codeLength;
 
+}
+
+void __replace(std::string& s, const std::string& toReplace, const std::string replaceWith) {
+    size_t f = s.find(toReplace);
+    while(f) {
+        s.replace(f, toReplace.length(), replaceWith);
+        f = s.find(toReplace);
+    }
+}
+
+
+void MemSteve::decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString) {
+    outputString = inputString;
+    std::map<char, std::string>::iterator iter = c.begin();
+    for(; iter != c.end(); iter ++) {
+        std::string p;
+        p.push_back(iter->first);
+        __replace(outputString,iter->second,p);
+    }
 }
 
 float MemSteve::Encoder::encode(const std::string& inputString,
@@ -90,20 +103,7 @@ float MemSteve::Encoder::encode(const std::string& inputString,
     return this->encode(inputString,this->code,outputString);
 }
 
-void replace(std::string& s, const std::string& toReplace, const std::string replaceWith) {
-    size_t f = s.find(toReplace);
-    s.replace(f, toReplace.length(), replaceWith);
-}
 
-void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString) {
-    outputString = inputString;
-    std::map<char, std::string>::iterator iter = c.begin();
-    for(; iter != c.end(); iter ++) {
-        std::string p;
-        p.push_back(iter->first);
-        replace(outputString,iter->second,p);
-    }
-}
 
 
 void traverseWithCode(MemSteve::HuffmenTree::node* root, std::string previousCode, int flag, std::map<char, std::string> &c) {
