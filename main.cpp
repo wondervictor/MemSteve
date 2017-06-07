@@ -12,6 +12,8 @@ int main() {
     std::string path = "/Users/vic/Dev/Alg/InfomationTheory/MemSteve/test/";
     int m = wordCounter.readFile(path+"Steve.txt",s);
     std::map<char, int> letters;
+    double entropy = wordCounter.calculateEntropy(letters);
+    std::cout<<"Entropy: "<<entropy<<"\n";
     wordCounter.getLetters(letters);
 
     float l = MemSteve::codeByShannon(letters,s,path+"shannon.dat");//MemSteve::codeByHuffmen(letters,s,path+"huffmen.dat");

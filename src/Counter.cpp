@@ -6,7 +6,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <map>
+#include <cmath>
+#include <vector>
 using std::ifstream;
 
 
@@ -40,8 +41,23 @@ int MemSteve::Counter::countLetters(std::string input) {
     return sum;
 }
 
+inline static double __calculateEntropy(double prob) {
+    return -prob*log(prob);
+}
+
 double MemSteve::Counter::calculateEntropy(std::map<char, int> s) {
     double entropy = 0.0;
-
+    std::vector<double> probs;
+    std::map<char, int> ::iterator iter = s.begin();
+    int sum = 0;
+    double temp = 0;
+    for(; iter != s.end(); iter ++) {
+        temp = iter->second;
+        sum += temp;
+        probs.push_back(temp);
+    }
+    for(auto i: probs) {
+        entropy += __calculateEntropy(temp/sum);
+    }
     return entropy;
 }
