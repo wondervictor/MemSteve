@@ -18,9 +18,9 @@
 namespace MemSteve {
 
 
-    float codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName);
+    float codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName, const std::string codeFileName);
 
-    float codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName);
+    float codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName, const std::string codeFileName);
 
 
     class Encoder {
@@ -75,6 +75,7 @@ namespace MemSteve {
         HuffmenTree()= default;
         HuffmenTree(std::map<char, int>& letters);
 
+        void saveCode(const std::map<char, std::string>& c, const std::string name);
         ~HuffmenTree();
 
         void traverseTree();
@@ -95,6 +96,8 @@ namespace MemSteve {
         Shannon(const std::map<char, int>& letters);
         std::map<char, std::string> getShannonCode() const { return code; };
         void encode(const std::map<char, int>& letters);
+
+        void saveCode(const std::map<char, std::string>& c, const std::string name);
 
     private:
         std::map<char, std::string> code;

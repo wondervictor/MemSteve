@@ -12,12 +12,12 @@
 #define LEFT 0
 #define RIGHT 1
 
-float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName) {
+float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName,const std::string codeFileName) {
     float codeLength = 0.0;
     HuffmenTree huffmenTree(const_cast<std::map<char, int>& >(letters));
     std::map<char, std::string> code;
     huffmenTree.encode(code);
-
+    huffmenTree.saveCode(code,codeFileName);
 
     Encoder encoder(code);
 
@@ -28,15 +28,17 @@ float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::str
 
     encoder.writeToFile(outputString, outputFileName);
 
+
     return codeLength;
 }
 
 
-float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName) {
+float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string outputFileName,const std::string codeFileName) {
     float codeLength = 0.0;
     Shannon shannon(letters);
     std::map<char, std::string> code = shannon.getShannonCode();
     Encoder encoder(code);
+    shannon.saveCode(code,codeFileName);
 
     std::string outputString;
 
@@ -68,6 +70,17 @@ void MemSteve::Encoder::writeToFile(const std::string &inputString, const std::s
 
     std::ofstream outputFile(fileName, std::ios::binary);
     outputFile << inputString;
+    outputFile.close();
+}
+
+void __saveCode(const std::map<char, std::string>& c, const std::string name) {
+    std::ofstream outputFile(name, std::ios::binary);
+    std::map<char, std::string>::iterator iter = const_cast<std::map<char, std::string>& >(c).begin();
+    for(; iter != c.end(); iter ++) {
+        char s[20];
+        sprintf(s,"%c:%s\n",iter->first,iter->second.c_str());
+        outputFile << s;
+    }
     outputFile.close();
 }
 
@@ -169,7 +182,9 @@ void::MemSteve::HuffmenTree::construct(std::priority_queue<node*,std::vector<nod
     this->root = topNode;
 }
 
-
+void MemSteve::HuffmenTree::saveCode(const std::map<char, std::string> &c, const std::string name) {
+    __saveCode(c,name);
+}
 
 static void deleteHuffmanNode(MemSteve::HuffmenTree::node* root) {
     if (root->right) {
@@ -259,7 +274,9 @@ void MemSteve::Shannon::encode(const std::map<char, int> &letters) {
     }
 }
 
-
+void MemSteve::Shannon::saveCode(const std::map<char, std::string> &c, const std::string name) {
+    __saveCode(c,name);
+}
 
 
 

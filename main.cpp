@@ -15,8 +15,9 @@ int main() {
     wordCounter.getLetters(letters);
     double entropy = wordCounter.calculateEntropy(letters);
     std::cout<<"Entropy: "<<entropy<<"\n";
-    float l = MemSteve::codeByShannon(letters,s,path+"shannon.dat");//MemSteve::codeByHuffmen(letters,s,path+"huffmen.dat");
+    float l = MemSteve::codeByShannon(letters,s,path+"shannon.dat",path+"shannoncode.txt");//MemSteve::codeByHuffmen(letters,s,path+"huffmen.dat");
     std::cout<<"\n"<<"code length: "<<l<<"\n";
+
 
 //    MemSteve::HuffmenTree ht(letters);
 //    std::cout<<m<<"\n";
