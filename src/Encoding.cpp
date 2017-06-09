@@ -13,14 +13,13 @@
 #define RIGHT 1
 
 float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName,const std::string codeFileName) {
-    float codeLength = 0.0;
     HuffmenTree huffmenTree(const_cast<std::map<char, int>& >(letters));
     huffmenTree.encode(code);
     huffmenTree.saveCode(code,codeFileName);
 
     Encoder encoder(code);
 
-    codeLength = encoder.encode(inputString,code,outputString);
+    float codeLength = encoder.encode(inputString,code,outputString);
     std::cout<<outputString<<"\n";
 
     encoder.writeToFile(outputString, outputFileName);
@@ -30,19 +29,34 @@ float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::str
 
 
 float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName,const std::string codeFileName) {
-    float codeLength = 0.0;
     Shannon shannon(letters);
     code = shannon.getShannonCode();
     Encoder encoder(code);
     shannon.saveCode(code,codeFileName);
 
-    codeLength = encoder.encode(inputString,code,outputString);
+    float codeLength = encoder.encode(inputString,code,outputString);
     std::cout<<outputString<<"\n";
 
     encoder.writeToFile(outputString, outputFileName);
 
     return codeLength;
 
+}
+
+float MemSteve::codeByShannonFanoElias(const std::map<char, int> &letters, const std::string inputString,
+                                       std::string &outputString, std::map<char, std::string> code,
+                                       std::string outputFileName, const std::string codeFileName) {
+    ShannonFanoElias sfe(letters);
+    code = sfe.getShannonFanoEliasCode();
+    Encoder encoder(code);
+    sfe.saveCode(code,codeFileName);
+
+    float codeLength = encoder.encode(inputString,code,outputString);
+    std::cout<<outputString<<"\n";
+
+    encoder.writeToFile(outputString, outputFileName);
+
+    return codeLength;
 }
 
 void __replace(std::string& s, const std::string& toReplace, const std::string replaceWith) {
