@@ -185,11 +185,9 @@ void::MemSteve::HuffmenTree::construct(std::priority_queue<node*,std::vector<nod
         node* combineNode = new node(0,firstNode->weight+secondNode->weight);
         combineNode->left = firstNode;
         combineNode->right = secondNode;
-//        std::cout<<"left: "<<firstNode->letter<<" right: "<<secondNode->letter<<"\n";
         firstNode->parent = combineNode;
         secondNode->parent = combineNode;
         huffmenList.push(combineNode);
-//        std::cout<<"Combine:"<< combineNode->weight<<"\n";
     }
 
     node* topNode = huffmenList.top();
@@ -302,7 +300,7 @@ void MemSteve::Shannon::saveCode(const std::map<char, std::string> &c, const std
 
 
 
-void MemSteve::ShannonFanoElias::ShannonFanoElias(const std::map<char, int> &letters) {
+MemSteve::ShannonFanoElias::ShannonFanoElias(const std::map<char, int> &letters) {
     encode(letters);
 }
 
