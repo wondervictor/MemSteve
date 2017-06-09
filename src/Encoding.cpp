@@ -240,37 +240,44 @@ MemSteve::Shannon::Shannon(const std::map<char, int> &letters) {
 
 
 bool cmp(const std::pair<char, float>& a, const std::pair<char, float>& b) {
-    return a.second < b.second;
+    return a.second > b.second;
 }
 
-int getFloatBinary(float& num) {
-    num = num * 2;
-    return (int)(num);
+std::string getFloatBinary(double& num, int length) {
+    std::string biFloatNumStr;
+    while (length > 0) {
+        length --;
+        num = num * 2;
+        if (num >= 1) {
+            biFloatNumStr.push_back('1');
+            num = num - 1;
+        } else {
+            biFloatNumStr.push_back('0');
+        }
+    }
+    return biFloatNumStr;
 }
 
 void MemSteve::Shannon::encode(const std::map<char, int> &letters) {
     int sum = 0;
-    std::vector<std::pair<char, float> > letterList;
+    std::vector<std::pair<char, double> > letterList;
     std::map<char, int>::iterator iter = const_cast<std::map<char, int>& >(letters).begin();
     for(; iter != letters.end(); iter ++)  {
         sum += iter->second;
-        std::pair<char, float> p(iter->first, iter->second);
+        std::pair<char, double> p(iter->first, iter->second);
         letterList.push_back(p);
     }
 
     std::sort(letterList.begin(),letterList.end(),cmp);
-    float currentProb = 0;
-    std::vector<std::pair<char, float> >::iterator listIter = letterList.begin();
+    double currentProb = 0;
+    std::vector<std::pair<char, double> >::iterator listIter = letterList.begin();
     for(; listIter != letterList.end(); listIter ++) {
-        int length = (int)ceilf(log2f((float)sum/listIter->second));//ceil(log2f(sum/iter->second));
-        std::string __code;
-        float prob = currentProb;
-        while(length) {
-            length --;
-            __code.push_back(getFloatBinary(prob) ? '1':'0');
-        }
+        std::cout<<listIter->second<<"\n";
+        int length = (int)ceil(log2((double)sum/listIter->second));
+        double prob = currentProb;
+        std::string __code = getFloatBinary(prob,length);
         code[listIter->first] = __code;
-        currentProb += (float)listIter->second/sum;
+        currentProb += listIter->second/sum;
     }
 }
 

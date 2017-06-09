@@ -102,6 +102,20 @@ namespace MemSteve {
 
     private:
         std::map<char, std::string> code;
+    };
+
+    class ShannonFano {
+    public:
+        ShannonFano()= default;
+        ShannonFano(const std::map<char, int>& letters);
+        std::map<char, std::string> getShannonFanoCode() const { return code; };
+        void encode(const std::map<char, int>& letters);
+
+        void saveCode(const std::map<char, std::string>& c, const std::string name);
+
+
+    private:
+        std::map<char, std::string> code;
 
     };
 
