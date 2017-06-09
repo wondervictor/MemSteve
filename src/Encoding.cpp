@@ -20,7 +20,7 @@ float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::str
     Encoder encoder(code);
 
     float codeLength = encoder.encode(inputString,code,outputString);
-    std::cout<<outputString<<"\n";
+//    std::cout<<outputString<<"\n";
 
     encoder.writeToFile(outputString, outputFileName);
 
@@ -35,7 +35,7 @@ float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::str
     shannon.saveCode(code,codeFileName);
 
     float codeLength = encoder.encode(inputString,code,outputString);
-    std::cout<<outputString<<"\n";
+//    std::cout<<outputString<<"\n";
 
     encoder.writeToFile(outputString, outputFileName);
 
@@ -52,7 +52,7 @@ float MemSteve::codeByShannonFanoElias(const std::map<char, int> &letters, const
     sfe.saveCode(code,codeFileName);
 
     float codeLength = encoder.encode(inputString,code,outputString);
-    std::cout<<outputString<<"\n";
+//    std::cout<<outputString<<"\n";
 
     encoder.writeToFile(outputString, outputFileName);
 
@@ -67,7 +67,7 @@ void __replace(std::string& s, const std::string& toReplace, const std::string r
     }
 }
 
-
+// decode the string with code map
 void MemSteve::decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString) {
     outputString = inputString;
     std::map<char, std::string>::iterator iter = c.begin();
@@ -105,7 +105,7 @@ void __saveCode(const std::map<char, std::string>& c, const std::string name) {
     std::map<char, std::string>::iterator iter = const_cast<std::map<char, std::string>& >(c).begin();
     for(; iter != c.end(); iter ++) {
         char s[20];
-        sprintf(s,"%c:%s\n",iter->first,iter->second.c_str());
+        sprintf(s,"%c,%s\n",iter->first,iter->second.c_str());
         outputFile << s;
     }
     outputFile.close();
@@ -147,6 +147,7 @@ void MemSteve::HuffmenTree::convert(const std::map<char, int>& letters, std::pri
         huffmenList.push(newNode);
     }
 
+    // test lines
 //    for(auto le: letters) {
 //        huffmenList.push(le);
 //    }
@@ -176,7 +177,7 @@ void::MemSteve::HuffmenTree::construct(std::priority_queue<node*,std::vector<nod
         return;
     }
 
-
+    // construct the Huffmen Tree by priority queue
     while(huffmenList.size()>1) {
         node* firstNode = huffmenList.top();
         huffmenList.pop();
@@ -198,6 +199,7 @@ void MemSteve::HuffmenTree::saveCode(const std::map<char, std::string> &c, const
     __saveCode(c,name);
 }
 
+// free the memory of huffmen Tree
 static void deleteHuffmanNode(MemSteve::HuffmenTree::node* root) {
     if (root->right) {
         deleteHuffmanNode(root->right);
@@ -223,6 +225,7 @@ MemSteve::HuffmenTree::HuffmenTree(std::map<char, int> &letters) {
     construct(huffmenLetters);
 }
 
+// dump the huffmen tree
 void trav(MemSteve::HuffmenTree::node* a, int counter) {
 
     if (a->letter != 0) {
@@ -250,11 +253,12 @@ MemSteve::Shannon::Shannon(const std::map<char, int> &letters) {
     encode(letters);
 }
 
-
+// compare function for sorting method
 bool cmp(const std::pair<char, float>& a, const std::pair<char, float>& b) {
     return a.second > b.second;
 }
 
+// convert the double number into binary strings of length
 std::string getFloatBinary(double& num, int length) {
     std::string biFloatNumStr;
     while (length > 0) {
@@ -283,8 +287,8 @@ void MemSteve::Shannon::encode(const std::map<char, int> &letters) {
     std::sort(letterList.begin(),letterList.end(),cmp);
     double currentProb = 0;
     std::vector<std::pair<char, double> >::iterator listIter = letterList.begin();
+    // accumulating function and get the corresponding code
     for(; listIter != letterList.end(); listIter ++) {
-        std::cout<<listIter->second<<"\n";
         int length = (int)ceil(log2((double)sum/listIter->second));
         double prob = currentProb;
         std::string __code = getFloatBinary(prob,length);
@@ -317,7 +321,7 @@ void MemSteve::ShannonFanoElias::encode(const std::map<char, int> &letters) {
     std::sort(letterList.begin(),letterList.end(),cmp);
     std::vector<std::pair<char, double> >::iterator listIter = letterList.begin();
     double currentProb = 0.0;
-    // revised accumulating function
+    // revised accumulating function and get the corresponding code
     for(; listIter != letterList.end(); listIter ++) {
         double prob = currentProb +listIter->second/(2*sum) ;
         currentProb += listIter->second/sum;

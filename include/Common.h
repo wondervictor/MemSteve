@@ -8,8 +8,10 @@
 // unit: u seconds
 typedef unsigned int timeInterval;
 
+// start the timer
 void startTimer();
 
+// stop the timer and get the duration
 void stopTimer(timeInterval& duration);
 
 #endif //MEMSTEVE_COMMON_H

@@ -13,6 +13,7 @@ using std::ifstream;
 
 int MemSteve::Counter::readFile(std::string fileName, std::string& outputString) {
 
+    // read data by using ifstream (file stream)
     ifstream file(fileName,std::ios::binary);
     file.seekg(0, std::ios::end);
     std::ifstream::pos_type fileSize = file.tellg();
@@ -30,6 +31,8 @@ int MemSteve::Counter::countLetters(std::string input) {
     int sum = 0;
 
     for(char m: input) {
+        // Filter: some wrong-encoding (not utf-8) may exist in the inputString
+        // ASCII characters' values are small than 255 (8 bit)
         if ((uint)m <= 255) {
             sum += 1;
             if (this->counterData[m]) {
@@ -40,6 +43,7 @@ int MemSteve::Counter::countLetters(std::string input) {
     }
     return sum;
 }
+
 
 inline static double __calculateEntropy(double prob) {
     return -prob*log2(prob);

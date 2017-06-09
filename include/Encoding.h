@@ -17,14 +17,34 @@
 
 namespace MemSteve {
 
-
+    /**
+     * @name codeByHuffmen
+     * @brief input the string that needs to be encoded by Huffmen
+     * @param letters key-value map key:character value:frequency
+     * @param inputString string need to be encoded
+     * @param outputString encoded string
+     * @param code coding result, key-value key:character value: corresponding code
+     * @param outputFileName filename of the encoded string
+     * @param codeFileName filename of the code map
+     * @return code length
+     * */
     float codeByHuffmen(const std::map<char, int>& letters,
                         const std::string inputString,
                         std::string& outputString,
                         std::map<char, std::string> code,
                         std::string outputFileName,
                         const std::string codeFileName);
-
+    /**
+     * @name codeByShannon
+     * @brief input the string that needs to be encoded by Shannon Coding
+     * @param letters key-value map key:character value:frequency
+     * @param inputString string need to be encoded
+     * @param outputString encoded string
+     * @param code coding result, key-value key:character value: corresponding code
+     * @param outputFileName filename of the encoded string
+     * @param codeFileName filename of the code map
+     * @return code length
+     * */
     float codeByShannon(const std::map<char, int>& letters,
                         const std::string inputString,
                         std::string& outputString,
@@ -32,6 +52,18 @@ namespace MemSteve {
                         std::string outputFileName,
                         const std::string codeFileName);
 
+
+    /**
+     * @name codeByShannonFanoElias
+     * @brief input the string that needs to be encoded by S-F-E
+     * @param letters key-value map key:character value:frequency
+     * @param inputString string need to be encoded
+     * @param outputString encoded string
+     * @param code coding result, key-value key:character value: corresponding code
+     * @param outputFileName filename of the encoded string
+     * @param codeFileName filename of the code map
+     * @return code length
+     * */
     float codeByShannonFanoElias(const std::map<char, int>& letters,
                                  const std::string inputString,
                                  std::string& outputString,
@@ -44,11 +76,12 @@ namespace MemSteve {
     void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString);
 
 
+    /// Encoder: collect the code map and encode the string into compressed string
     class Encoder {
 
     public:
 
-        Encoder();
+        Encoder()= default;
 
         Encoder(std::map<char, std::string>& c):code(c){};
 
@@ -64,14 +97,12 @@ namespace MemSteve {
     private:
         std::map<char, std::string> code;
 
-
     };
 
     // Huffmen Coding
     class HuffmenTree {
-
-
     public:
+        // Node of Huffmen Tree
         struct node {
             node* left;
             node* right;
@@ -86,6 +117,7 @@ namespace MemSteve {
             node(char le, float we, node* r, node* p, node* l):weight(we),letter(le),parent(p),left(l),right(r){};
         };
 
+        // Comparing function for Priority queue
         struct cmp {
             bool operator()(const node* a,const node* b)const {
                 return a->weight > b->weight;
@@ -99,14 +131,14 @@ namespace MemSteve {
         void saveCode(const std::map<char, std::string>& c, const std::string name);
         ~HuffmenTree();
 
+        // dump the huffmen tree by DFS Algorithm
         void traverseTree();
-
-
-
 
     private:
         node* root;
+        // convert the letters (character frequency) into huffmen tree node type
         void convert(const std::map<char, int>& letters, std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList);
+        // construct the huffmen tree with nodes and a priority queue
         void construct(std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList);
     };
 
