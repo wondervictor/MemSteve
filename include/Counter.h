@@ -25,6 +25,8 @@ namespace MemSteve {
 
         void getLetters(std::map<char, int>& letters) { letters = counterData; }
 
+        void writeLettersToFile(const std::map<char, int>& letters, const std::string fileName);
+
     private:
         std::map<char, int > counterData;
         int countLetters(std::string input);

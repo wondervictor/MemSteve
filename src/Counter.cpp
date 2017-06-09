@@ -61,3 +61,14 @@ double MemSteve::Counter::calculateEntropy(std::map<char, int> s) {
     }
     return entropy;
 }
+
+void MemSteve::Counter::writeLettersToFile(const std::map<char, int> &letters, const std::string fileName) {
+    std::ofstream outputFile(fileName, std::ios::binary);
+    std::map<char, int>::iterator iter = const_cast<std::map<char, int>& >(letters).begin();
+    for(; iter != letters.end(); iter ++) {
+        char s[20];
+        sprintf(s,"%c,%d\n",iter->first,iter->second);
+        outputFile << s;
+    }
+    outputFile.close();
+}

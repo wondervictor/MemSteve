@@ -14,6 +14,7 @@ int main() {
     std::map<char, int> letters;
     std::map<char, std::string> code;
     wordCounter.getLetters(letters);
+    wordCounter.writeLettersToFile(letters,path+"letter.csv")
     double entropy = wordCounter.calculateEntropy(letters);
     std::cout<<"Entropy: "<<entropy<<"\n";
     std::string outputString;
