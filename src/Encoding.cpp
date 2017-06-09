@@ -287,3 +287,36 @@ void MemSteve::Shannon::saveCode(const std::map<char, std::string> &c, const std
 
 
 
+
+void MemSteve::ShannonFanoElias::ShannonFanoElias(const std::map<char, int> &letters) {
+    encode(letters);
+}
+
+
+void MemSteve::ShannonFanoElias::encode(const std::map<char, int> &letters) {
+    int sum = 0;
+    std::vector<std::pair<char, double> > letterList;
+    std::map<char, int>::iterator iter = const_cast<std::map<char, int>& >(letters).begin();
+    for(; iter != letters.end(); iter ++)  {
+        sum += iter->second;
+        std::pair<char, double> p(iter->first, iter->second);
+        letterList.push_back(p);
+    }
+    std::sort(letterList.begin(),letterList.end(),cmp);
+    std::vector<std::pair<char, double> >::iterator listIter = letterList.begin();
+    double currentProb = 0.0;
+    // revised accumulating function
+    for(; listIter != letterList.end(); listIter ++) {
+        double prob = currentProb +listIter->second/(2*sum) ;
+        currentProb += listIter->second/sum;
+        int length = (int)ceil(log2((double)sum/listIter->second));
+        std::string __code = getFloatBinary(prob,length);
+        code[listIter->first] = __code;
+    }
+}
+
+void MemSteve::ShannonFanoElias::saveCode(const std::map<char, std::string> &c, const std::string name) {
+    __saveCode(c,name);
+}
+
+

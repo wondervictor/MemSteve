@@ -48,6 +48,7 @@ namespace MemSteve {
 
     };
 
+    // Huffmen Coding
     class HuffmenTree {
 
 
@@ -90,7 +91,7 @@ namespace MemSteve {
         void construct(std::priority_queue<node*,std::vector<node*>,cmp>& huffmenList);
     };
 
-
+    // Shannon Coding
     class Shannon {
     public:
         Shannon()= default;
@@ -104,11 +105,12 @@ namespace MemSteve {
         std::map<char, std::string> code;
     };
 
-    class ShannonFano {
+    // Shannon-Fano-Elias Coding
+    class ShannonFanoElias {
     public:
-        ShannonFano()= default;
-        ShannonFano(const std::map<char, int>& letters);
-        std::map<char, std::string> getShannonFanoCode() const { return code; };
+        ShannonFanoElias()= default;
+        ShannonFanoElias(const std::map<char, int>& letters);
+        std::map<char, std::string> getShannonFanoEliasCode() const { return code; };
         void encode(const std::map<char, int>& letters);
 
         void saveCode(const std::map<char, std::string>& c, const std::string name);
