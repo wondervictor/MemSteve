@@ -1,12 +1,20 @@
 # MemSteve
 
-> Course Project for Infomation Theory.
+> Course Project for Infomation Theory. To commemorate the commencement which Steve Jobs delivered in 2005 Stanford University.
 
 ## Introduction
 
+* **Compute the Frequency of each letter/punctuation/space**
 
-## Prerequisites
- 
+* **Compute the Entropy of the passage**
+
+* **Compression Methods Implementation**
+
+	* Huffmen Coding
+	* Shannon Coding
+	* Shannon-Fano-Elias Coding
+
+
 
 ## Usage
 
@@ -14,7 +22,13 @@
 cd MemSteve
 cmake .
 make
+./MemSteve
 ````
+
+## Output
+
+* encoded strings(dat file)
+* code (csv file)
 
 ## Test
 
