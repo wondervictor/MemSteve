@@ -64,7 +64,7 @@ int main() {
     double entropy = wordCounter.calculateEntropy(letters);
     std::cout<<"Initialized Data Finished!"<<"\n";
     std::cout<<"Passage Entropy: "<<entropy<<"\n\n";
-    
+
     shannon(letters,s,path);
     huffmen(letters,s,path);
     shannonFanoElias(letters,s,path);
