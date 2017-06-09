@@ -42,7 +42,7 @@ int MemSteve::Counter::countLetters(std::string input) {
 }
 
 inline static double __calculateEntropy(double prob) {
-    return -prob*log(prob);
+    return -prob*log2(prob);
 }
 
 double MemSteve::Counter::calculateEntropy(std::map<char, int> s) {
