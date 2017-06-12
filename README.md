@@ -32,7 +32,8 @@
 
 	* **Steve.txt** origin txt
 	* **xxxxxcode.csv** code word for each letter (The first line is a `\n` character)
-	* **xxxx.dat** encoded txt 
+	* **xxxx.dat** encoded txt
+	* **xxxxdecode.txt** content by decoded the compressed string.
 
 ## Usage
 
@@ -66,6 +67,7 @@ you need to change the `path`!
 
 * encoded strings(dat file)
 * code (csv file)
+* decoded strings(txt file)
 
 ## Test
 
