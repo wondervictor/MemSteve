@@ -72,8 +72,14 @@ namespace MemSteve {
                                  const std::string codeFileName);
 
 
-
-    void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString, std::string outputFileName);
+    /**
+     * @name decode
+     * @brief inputString the encoded string that needs to be decode
+     * @param outputString encoded string
+     * @param code coding result, key-value key:character value: corresponding code
+     * @param codeFileName filename of the decoded text
+     * */
+    void decode(const std::string& inputString, std::map<char, std::string>& code, std::string& outputString, std::string outputFileName);
 
 
     /// Encoder: collect the code map and encode the string into compressed string
