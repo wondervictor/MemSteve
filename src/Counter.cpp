@@ -71,6 +71,7 @@ void MemSteve::Counter::writeLettersToFile(const std::map<char, int> &letters, c
     std::map<char, int>::iterator iter = const_cast<std::map<char, int>& >(letters).begin();
     for(; iter != letters.end(); iter ++) {
         char s[20];
+//        std::cout<<(int)iter->first<<"\n";
         sprintf(s,"%c,%d\n",iter->first,iter->second);
         outputFile << s;
     }

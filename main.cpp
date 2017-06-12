@@ -11,6 +11,9 @@ void huffmen(std::map<char, int>& letters, std::string& inputString, std::string
     startTimer();
     float l = MemSteve::codeByHuffmen(letters,inputString,outputString,code,path+"huffmen.dat",path+"huffmencode.csv");
     stopTimer(time);
+
+    std::string decodeString;
+    MemSteve::decode(outputString,code,decodeString,path+"huffmendecode.txt");
     // uncomment the below line output the encoded string to the terminal
     //std::cout<<"output:"<<outputString<<std::end;
     std::cout<<"Huffmen Encoding Finished!"<<"\n";
@@ -26,6 +29,8 @@ void shannon(std::map<char, int>& letters, std::string& inputString, std::string
     startTimer();
     float l = MemSteve::codeByShannon(letters,inputString,outputString,code,path+"shanon.dat",path+"shannoncode.csv");
     stopTimer(time);
+    std::string decodeString;
+    MemSteve::decode(outputString,code,decodeString,path+"Shannondecode.txt");
     // uncomment the below line output the encoded string to the terminal
     //std::cout<<"output:"<<outputString<<std::end;
     std::cout<<"Shannon Encoding Finished!"<<"\n";
@@ -40,6 +45,8 @@ void shannonFanoElias(std::map<char, int>& letters, std::string& inputString, st
     startTimer();
     float l = MemSteve::codeByShannonFanoElias(letters,inputString,outputString,code,path+"shanon_fano_elias.dat",path+"sfecode.csv");
     stopTimer(time);
+    std::string decodeString;
+    MemSteve::decode(outputString,code,decodeString,path+"sfedecode.txt");
     // uncomment the below line output the encoded string to the terminal
     //std::cout<<"output:"<<outputString<<std::end;
     std::cout<<"Shannon-Fano-Elias Encoding Finished!"<<"\n";
@@ -63,7 +70,9 @@ int main() {
     wordCounter.writeLettersToFile(letters,path+"letter.csv");
     double entropy = wordCounter.calculateEntropy(letters);
     std::cout<<"Initialized Data Finished!"<<"\n";
-    std::cout<<"Passage Entropy: "<<entropy<<"\n\n";
+    std::cout<<"Passage Entropy: "<<entropy<<"\n";
+    std::cout<<"Passage Char Number: "<<m<<"\n\n";
+
 
     shannon(letters,s,path);
     huffmen(letters,s,path);

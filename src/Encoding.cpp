@@ -12,7 +12,7 @@
 #define LEFT 0
 #define RIGHT 1
 
-float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName,const std::string codeFileName) {
+float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string>& code, std::string outputFileName,const std::string codeFileName) {
     HuffmenTree huffmenTree(const_cast<std::map<char, int>& >(letters));
     huffmenTree.encode(code);
     huffmenTree.saveCode(code,codeFileName);
@@ -21,14 +21,15 @@ float MemSteve::codeByHuffmen(const std::map<char, int>& letters, const std::str
 
     float codeLength = encoder.encode(inputString,code,outputString);
 //    std::cout<<outputString<<"\n";
-
-    encoder.writeToFile(outputString, outputFileName);
+//    std::string decodeString;
+//    decode(outputString,code,decodeString);
+//    encoder.writeToFile(outputString, outputFileName);
 
     return codeLength;
 }
 
 
-float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string> code, std::string outputFileName,const std::string codeFileName) {
+float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::string inputString, std::string& outputString, std::map<char, std::string>& code, std::string outputFileName,const std::string codeFileName) {
     Shannon shannon(letters);
     code = shannon.getShannonCode();
     Encoder encoder(code);
@@ -44,7 +45,7 @@ float MemSteve::codeByShannon(const std::map<char, int>& letters, const std::str
 }
 
 float MemSteve::codeByShannonFanoElias(const std::map<char, int> &letters, const std::string inputString,
-                                       std::string &outputString, std::map<char, std::string> code,
+                                       std::string &outputString, std::map<char, std::string>& code,
                                        std::string outputFileName, const std::string codeFileName) {
     ShannonFanoElias sfe(letters);
     code = sfe.getShannonFanoEliasCode();
@@ -67,16 +68,56 @@ void __replace(std::string& s, const std::string& toReplace, const std::string r
     }
 }
 
-// decode the string with code map
-void MemSteve::decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString) {
-    outputString = inputString;
-    std::map<char, std::string>::iterator iter = c.begin();
-    for(; iter != c.end(); iter ++) {
-        std::string p;
-        p.push_back(iter->first);
-        __replace(outputString,iter->second,p);
+void revertMap(std::map<char, std::string>& code, std::map<std::string, char>& edoc) {
+    std::map<char, std::string>::iterator iter = code.begin();
+
+    for (; iter != code.end(); iter ++) {
+        edoc[iter->second] = iter->first;
+        std::cout<<iter->second<<"\n";
     }
 }
+
+static void __writeFile(const std::string &inputString, const std::string &fileName) {
+    std::ofstream outputFile(fileName, std::ios::binary);
+    outputFile << inputString;
+    outputFile.close();
+}
+
+
+
+
+static void decodeByElement(std::map<char, std::string>& code, std::string& inputString, std::string& outputString) {
+    std::map<std::string, char> edoc;
+    revertMap(code, edoc);
+    std::string currentString;
+    std::cout<<"TETS"<<"\n";
+    for(auto i: inputString) {
+        currentString.push_back(i);
+//        std::cout<<currentString<<"\n";
+        if ((uint8_t)edoc[currentString] > 0) {
+            std::cout<<edoc[currentString]<<"\n";
+            outputString.push_back(edoc[currentString]);
+            currentString = "";
+        }
+    }
+
+}
+
+
+
+
+// decode the string with code map
+void MemSteve::decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString, std::string outputFileName) {
+    decodeByElement(c, const_cast<std::string&>(inputString),outputString);
+    __writeFile(outputString, outputFileName);
+
+}
+
+
+
+
+
+
 
 float MemSteve::Encoder::encode(const std::string& inputString,
                               std::map<char, std::string>& code,
@@ -93,11 +134,9 @@ float MemSteve::Encoder::encode(const std::string& inputString,
     return (float)length/num;
 }
 
-void MemSteve::Encoder::writeToFile(const std::string &inputString, const std::string &fileName) {
 
-    std::ofstream outputFile(fileName, std::ios::binary);
-    outputFile << inputString;
-    outputFile.close();
+void MemSteve::Encoder::writeToFile(const std::string &inputString, const std::string &fileName) {
+    __writeFile(inputString, fileName);
 }
 
 void __saveCode(const std::map<char, std::string>& c, const std::string name) {

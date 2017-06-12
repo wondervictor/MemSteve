@@ -31,7 +31,7 @@ namespace MemSteve {
     float codeByHuffmen(const std::map<char, int>& letters,
                         const std::string inputString,
                         std::string& outputString,
-                        std::map<char, std::string> code,
+                        std::map<char, std::string>& code,
                         std::string outputFileName,
                         const std::string codeFileName);
     /**
@@ -48,7 +48,7 @@ namespace MemSteve {
     float codeByShannon(const std::map<char, int>& letters,
                         const std::string inputString,
                         std::string& outputString,
-                        std::map<char, std::string> code,
+                        std::map<char, std::string>& code,
                         std::string outputFileName,
                         const std::string codeFileName);
 
@@ -67,13 +67,13 @@ namespace MemSteve {
     float codeByShannonFanoElias(const std::map<char, int>& letters,
                                  const std::string inputString,
                                  std::string& outputString,
-                                 std::map<char, std::string> code,
+                                 std::map<char, std::string>& code,
                                  std::string outputFileName,
                                  const std::string codeFileName);
 
 
 
-    void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString);
+    void decode(const std::string& inputString, std::map<char, std::string>& c, std::string& outputString, std::string outputFileName);
 
 
     /// Encoder: collect the code map and encode the string into compressed string
